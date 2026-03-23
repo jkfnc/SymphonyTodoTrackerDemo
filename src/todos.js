@@ -39,6 +39,10 @@ export function filterTodos(todos, filter) {
   return todos;
 }
 
+export function clearCompleted(todos) {
+  return todos.filter((todo) => !todo.completed);
+}
+
 export function getCounts(todos) {
   const completed = todos.filter((todo) => todo.completed).length;
   return {
