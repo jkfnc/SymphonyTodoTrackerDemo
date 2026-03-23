@@ -181,6 +181,10 @@ h1 {
   margin: 12px 0 0;
 }
 
+.clear-completed-bar[hidden] {
+  display: none !important;
+}
+
 .clear-completed-btn {
   font: inherit;
   border: 1px solid var(--line);
