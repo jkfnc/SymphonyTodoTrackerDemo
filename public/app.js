@@ -1,4 +1,4 @@
-import { addTodo, deleteTodo, filterTodos, getCounts, toggleTodo } from "../src/todos.js";
+import { addTodo, deleteTodo, filterTodos, getCounts, getSummary, toggleTodo } from "../src/todos.js";
 
 const storageKey = "symphony.todo-tracker.todos";
 
@@ -7,6 +7,7 @@ const elements = {
   input: document.querySelector("#todo-input"),
   list: document.querySelector("#todo-list"),
   counts: document.querySelector("#counts"),
+  summary: document.querySelector("#summary"),
   emptyState: document.querySelector("#empty-state"),
   filters: [...document.querySelectorAll(".filter")]
 };
@@ -49,6 +50,7 @@ function render() {
   const counts = getCounts(state.todos);
 
   elements.counts.textContent = `${counts.all} total, ${counts.active} active, ${counts.completed} completed`;
+  elements.summary.textContent = getSummary(state.todos);
   elements.emptyState.hidden = filtered.length > 0;
   elements.list.innerHTML = "";
 

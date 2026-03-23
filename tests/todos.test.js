@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 
-import { addTodo, createTodo, deleteTodo, filterTodos, getCounts, toggleTodo } from "../src/todos.js";
+import { addTodo, createTodo, deleteTodo, filterTodos, getCounts, getSummary, toggleTodo } from "../src/todos.js";
 
 function test(name, fn) {
   try {
@@ -47,6 +47,27 @@ test("filterTodos supports active and completed", () => {
 test("getCounts returns summary totals", () => {
   const todos = [createTodo("A"), { ...createTodo("B"), completed: true }];
   assert.deepEqual(getCounts(todos), { all: 2, active: 1, completed: 1 });
+});
+
+test("getSummary returns 'All tasks complete' when no active todos", () => {
+  assert.equal(getSummary([]), "All tasks complete");
+  const allDone = [{ ...createTodo("A"), completed: true }];
+  assert.equal(getSummary(allDone), "All tasks complete");
+});
+
+test("getSummary returns '1 task left' when one active todo", () => {
+  const todos = [createTodo("A")];
+  assert.equal(getSummary(todos), "1 task left");
+});
+
+test("getSummary returns 'N tasks left' when multiple active todos", () => {
+  const todos = [createTodo("A"), createTodo("B"), createTodo("C")];
+  assert.equal(getSummary(todos), "3 tasks left");
+});
+
+test("getSummary ignores completed todos in count", () => {
+  const todos = [createTodo("A"), { ...createTodo("B"), completed: true }, createTodo("C")];
+  assert.equal(getSummary(todos), "2 tasks left");
 });
 
 console.log("All tests passed.");
