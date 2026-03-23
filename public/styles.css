@@ -111,6 +111,9 @@ h1 {
 }
 
 .filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   border: 1px solid var(--line);
   background: white;
   color: var(--muted);
@@ -119,9 +122,27 @@ h1 {
   cursor: pointer;
 }
 
+.filter-badge {
+  min-width: 1.75rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(80, 60, 30, 0.12);
+  background: rgba(247, 243, 234, 0.9);
+  color: var(--text);
+  font-size: 0.82rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
 .filter.is-active {
   background: #1f4d3d;
   color: #effcf4;
+}
+
+.filter.is-active .filter-badge {
+  border-color: rgba(239, 252, 244, 0.24);
+  background: rgba(239, 252, 244, 0.18);
+  color: inherit;
 }
 
 .todo-list {

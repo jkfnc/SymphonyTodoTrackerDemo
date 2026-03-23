@@ -1,4 +1,5 @@
 import { addTodo, deleteTodo, filterTodos, getCounts, toggleTodo } from "../src/todos.js";
+import { syncFilterButtons } from "../src/filter-buttons.js";
 
 const storageKey = "symphony.todo-tracker.todos";
 
@@ -52,9 +53,7 @@ function render() {
   elements.emptyState.hidden = filtered.length > 0;
   elements.list.innerHTML = "";
 
-  elements.filters.forEach((button) => {
-    button.classList.toggle("is-active", button.dataset.filter === state.filter);
-  });
+  syncFilterButtons(elements.filters, state.filter, counts);
 
   filtered.forEach((todo) => {
     const item = document.createElement("li");
