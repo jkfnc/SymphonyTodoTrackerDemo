@@ -10,7 +10,10 @@
     <main class="app-shell">
       <section class="hero">
         <p class="eyebrow">Symphony Demo</p>
-        <h1>Todo Tracker</h1>
+        <div class="hero-heading">
+          <h1>Todo Tracker</h1>
+          <span id="status-badge" class="status-badge" aria-live="polite">Empty</span>
+        </div>
         <p class="lede">A small front-end todo board used for end-to-end Claude and Codex validation.</p>
       </section>
 
@@ -23,10 +26,13 @@
 
         <div class="toolbar">
           <div id="counts" class="counts" aria-live="polite"></div>
-          <div class="filters" role="tablist" aria-label="Todo filters">
-            <button class="filter is-active" data-filter="all" type="button">All</button>
-            <button class="filter" data-filter="active" type="button">Active</button>
-            <button class="filter" data-filter="completed" type="button">Completed</button>
+          <div class="toolbar-actions">
+            <div class="filters" role="tablist" aria-label="Todo filters">
+              <button class="filter is-active" data-filter="all" type="button">All</button>
+              <button class="filter" data-filter="active" type="button">Active</button>
+              <button class="filter" data-filter="completed" type="button">Completed</button>
+            </div>
+            <button id="clear-completed" class="clear-completed" type="button">Clear completed</button>
           </div>
         </div>
 

@@ -1,6 +1,15 @@
 import assert from "node:assert/strict";
 
-import { addTodo, createTodo, deleteTodo, filterTodos, getCounts, toggleTodo } from "../src/todos.js";
+import {
+  addTodo,
+  clearCompletedTodos,
+  createTodo,
+  deleteTodo,
+  filterTodos,
+  getCounts,
+  getListStatus,
+  toggleTodo
+} from "../src/todos.js";
 
 function test(name, fn) {
   try {
@@ -37,6 +46,14 @@ test("deleteTodo removes the matching todo", () => {
   assert.deepEqual(next.map((todo) => todo.title), ["Second"]);
 });
 
+test("clearCompletedTodos removes only completed todos", () => {
+  const first = createTodo("First");
+  const second = { ...createTodo("Second"), completed: true };
+  const third = { ...createTodo("Third"), completed: true };
+  const next = clearCompletedTodos([first, second, third]);
+  assert.deepEqual(next.map((todo) => todo.title), ["First"]);
+});
+
 test("filterTodos supports active and completed", () => {
   const first = createTodo("One");
   const second = { ...createTodo("Two"), completed: true };
@@ -47,6 +64,20 @@ test("filterTodos supports active and completed", () => {
 test("getCounts returns summary totals", () => {
   const todos = [createTodo("A"), { ...createTodo("B"), completed: true }];
   assert.deepEqual(getCounts(todos), { all: 2, active: 1, completed: 1 });
+});
+
+test("getListStatus returns Empty for no todos", () => {
+  assert.equal(getListStatus([]), "Empty");
+});
+
+test("getListStatus returns In progress when any todo is active", () => {
+  const todos = [createTodo("A"), { ...createTodo("B"), completed: true }];
+  assert.equal(getListStatus(todos), "In progress");
+});
+
+test("getListStatus returns Completed when all todos are complete", () => {
+  const todos = [{ ...createTodo("A"), completed: true }];
+  assert.equal(getListStatus(todos), "Completed");
 });
 
 console.log("All tests passed.");

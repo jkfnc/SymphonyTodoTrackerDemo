@@ -28,6 +28,10 @@ export function deleteTodo(todos, id) {
   return todos.filter((todo) => todo.id !== id);
 }
 
+export function clearCompletedTodos(todos) {
+  return todos.filter((todo) => !todo.completed);
+}
+
 export function filterTodos(todos, filter) {
   const normalized = FILTERS.has(filter) ? filter : "all";
   if (normalized === "active") {
@@ -46,4 +50,18 @@ export function getCounts(todos) {
     active: todos.length - completed,
     completed
   };
+}
+
+export function getListStatus(todos) {
+  const counts = getCounts(todos);
+
+  if (counts.all === 0) {
+    return "Empty";
+  }
+
+  if (counts.active > 0) {
+    return "In progress";
+  }
+
+  return "Completed";
 }
