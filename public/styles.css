@@ -91,12 +91,19 @@ h1 {
   cursor: pointer;
 }
 
+.summary-bar {
+  margin: 20px 0 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
 .toolbar {
   display: flex;
   justify-content: space-between;
   gap: 16px;
   align-items: center;
-  margin: 20px 0 16px;
+  margin: 0 0 16px;
   flex-wrap: wrap;
 }
 

@@ -47,3 +47,10 @@ export function getCounts(todos) {
     completed
   };
 }
+
+export function getSummary(todos) {
+  const { active } = getCounts(todos);
+  if (active === 0) return "All tasks complete";
+  if (active === 1) return "1 task left";
+  return `${active} tasks left`;
+}
