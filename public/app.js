@@ -1,4 +1,12 @@
-import { addTodo, deleteTodo, filterTodos, getCounts, toggleTodo } from "../src/todos.js";
+import {
+  addTodo,
+  clearCompletedTodos,
+  deleteTodo,
+  filterTodos,
+  getCounts,
+  getListStatus,
+  toggleTodo
+} from "../src/todos.js";
 
 const storageKey = "symphony.todo-tracker.todos";
 
@@ -7,7 +15,9 @@ const elements = {
   input: document.querySelector("#todo-input"),
   list: document.querySelector("#todo-list"),
   counts: document.querySelector("#counts"),
+  statusBadge: document.querySelector("#status-badge"),
   emptyState: document.querySelector("#empty-state"),
+  clearCompleted: document.querySelector("#clear-completed"),
   filters: [...document.querySelectorAll(".filter")]
 };
 
@@ -31,6 +41,12 @@ elements.filters.forEach((button) => {
   });
 });
 
+elements.clearCompleted.addEventListener("click", () => {
+  state.todos = clearCompletedTodos(state.todos);
+  persist();
+  render();
+});
+
 function loadTodos() {
   try {
     const raw = localStorage.getItem(storageKey);
@@ -47,9 +63,13 @@ function persist() {
 function render() {
   const filtered = filterTodos(state.todos, state.filter);
   const counts = getCounts(state.todos);
+  const status = getListStatus(state.todos);
 
   elements.counts.textContent = `${counts.all} total, ${counts.active} active, ${counts.completed} completed`;
+  elements.statusBadge.textContent = status;
+  elements.statusBadge.dataset.status = status.toLowerCase().replace(/\s+/g, "-");
   elements.emptyState.hidden = filtered.length > 0;
+  elements.clearCompleted.disabled = counts.completed === 0;
   elements.list.innerHTML = "";
 
   elements.filters.forEach((button) => {
