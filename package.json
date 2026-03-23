@@ -1,0 +1,14 @@
+{
+  "name": "symphony-todo-tracker-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/todos.test.js",
+    "screenshot": "node scripts/capture-screenshot.mjs"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.7.1"
+  }
+}

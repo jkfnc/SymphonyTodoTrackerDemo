@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Todo Tracker</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <p class="eyebrow">Symphony Demo</p>
+        <h1>Todo Tracker</h1>
+        <p class="lede">A small front-end todo board used for end-to-end Claude and Codex validation.</p>
+      </section>
+
+      <section class="panel">
+        <form id="todo-form" class="composer">
+          <label class="sr-only" for="todo-input">New task</label>
+          <input id="todo-input" name="title" type="text" placeholder="Add a task to the tracker" autocomplete="off" required>
+          <button type="submit">Add Task</button>
+        </form>
+
+        <div class="toolbar">
+          <div id="counts" class="counts" aria-live="polite"></div>
+          <div class="filters" role="tablist" aria-label="Todo filters">
+            <button class="filter is-active" data-filter="all" type="button">All</button>
+            <button class="filter" data-filter="active" type="button">Active</button>
+            <button class="filter" data-filter="completed" type="button">Completed</button>
+          </div>
+        </div>
+
+        <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
+        <p id="empty-state" class="empty-state">No tasks yet. Add one above.</p>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
