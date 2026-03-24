@@ -191,6 +191,17 @@ h1 {
   border: 0;
 }
 
+.app-footer {
+  text-align: center;
+  padding: 24px 20px 16px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.app-footer p {
+  margin: 0;
+}
+
 @media (max-width: 640px) {
   .composer {
     grid-template-columns: 1fr;
