@@ -7,6 +7,7 @@ const elements = {
   input: document.querySelector("#todo-input"),
   list: document.querySelector("#todo-list"),
   counts: document.querySelector("#counts"),
+  dueTodayPill: document.querySelector("#due-today-pill"),
   emptyState: document.querySelector("#empty-state"),
   filters: [...document.querySelectorAll(".filter")]
 };
@@ -49,6 +50,8 @@ function render() {
   const counts = getCounts(state.todos);
 
   elements.counts.textContent = `${counts.all} total, ${counts.active} active, ${counts.completed} completed`;
+  elements.dueTodayPill.textContent = `${counts.dueToday} due today`;
+  elements.dueTodayPill.classList.toggle("is-empty", counts.dueToday === 0);
   elements.emptyState.hidden = filtered.length > 0;
   elements.list.innerHTML = "";
 
