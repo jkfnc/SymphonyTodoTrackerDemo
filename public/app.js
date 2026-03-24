@@ -1,6 +1,7 @@
 import { addTodo, deleteTodo, filterTodos, getCounts, toggleTodo } from "../src/todos.js";
 
 const storageKey = "symphony.todo-tracker.todos";
+const themeKey = "symphony.todo-tracker.theme";
 
 const elements = {
   form: document.querySelector("#todo-form"),
@@ -8,13 +9,41 @@ const elements = {
   list: document.querySelector("#todo-list"),
   counts: document.querySelector("#counts"),
   emptyState: document.querySelector("#empty-state"),
-  filters: [...document.querySelectorAll(".filter")]
+  filters: [...document.querySelectorAll(".filter")],
+  themeToggle: document.querySelector("#theme-toggle")
 };
 
 const state = {
   todos: loadTodos(),
   filter: "all"
 };
+
+// Theme management
+function loadTheme() {
+  return localStorage.getItem(themeKey) || "dark";
+}
+
+function applyTheme(theme) {
+  if (theme === "light") {
+    document.documentElement.classList.add("light-mode");
+    elements.themeToggle.textContent = "Dark mode";
+    elements.themeToggle.setAttribute("aria-label", "Switch to dark mode");
+  } else {
+    document.documentElement.classList.remove("light-mode");
+    elements.themeToggle.textContent = "Light mode";
+    elements.themeToggle.setAttribute("aria-label", "Switch to light mode");
+  }
+}
+
+elements.themeToggle.addEventListener("click", () => {
+  const current = loadTheme();
+  const next = current === "dark" ? "light" : "dark";
+  localStorage.setItem(themeKey, next);
+  applyTheme(next);
+});
+
+// Apply saved theme on load
+applyTheme(loadTheme());
 
 elements.form.addEventListener("submit", (event) => {
   event.preventDefault();
