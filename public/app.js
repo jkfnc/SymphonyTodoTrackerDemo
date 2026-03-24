@@ -1,4 +1,5 @@
 import { addTodo, deleteTodo, filterTodos, getCounts, toggleTodo } from "../src/todos.js";
+import { shouldFocusTodoInput } from "../src/shortcut.js";
 
 const storageKey = "symphony.todo-tracker.todos";
 
@@ -29,6 +30,15 @@ elements.filters.forEach((button) => {
     state.filter = button.dataset.filter || "all";
     render();
   });
+});
+
+window.addEventListener("keydown", (event) => {
+  if (!shouldFocusTodoInput(event)) {
+    return;
+  }
+
+  event.preventDefault();
+  elements.input.focus();
 });
 
 function loadTodos() {

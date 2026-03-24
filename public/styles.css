@@ -180,6 +180,27 @@ h1 {
   color: var(--muted);
 }
 
+.empty-state-helper {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.92rem;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.08em 0.38em;
+  border: 1px solid rgba(80, 60, 30, 0.18);
+  border-bottom-width: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9em;
+  line-height: 1.2;
+  text-align: center;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

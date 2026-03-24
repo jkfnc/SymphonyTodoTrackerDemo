@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
+import { shouldFocusTodoInput } from "../src/shortcut.js";
 import { addTodo, createTodo, deleteTodo, filterTodos, getCounts, toggleTodo } from "../src/todos.js";
 
 function test(name, fn) {
@@ -47,6 +49,25 @@ test("filterTodos supports active and completed", () => {
 test("getCounts returns summary totals", () => {
   const todos = [createTodo("A"), { ...createTodo("B"), completed: true }];
   assert.deepEqual(getCounts(todos), { all: 2, active: 1, completed: 1 });
+});
+
+test("shouldFocusTodoInput accepts slash from non-editable targets", () => {
+  assert.equal(shouldFocusTodoInput({ key: "/", target: { tagName: "button" } }), true);
+});
+
+test("shouldFocusTodoInput ignores slash inside editable targets", () => {
+  assert.equal(shouldFocusTodoInput({ key: "/", target: { tagName: "input" } }), false);
+  assert.equal(shouldFocusTodoInput({ key: "/", target: { isContentEditable: true } }), false);
+});
+
+test("shouldFocusTodoInput ignores non-shortcut key presses", () => {
+  assert.equal(shouldFocusTodoInput({ key: "a", target: { tagName: "button" } }), false);
+  assert.equal(shouldFocusTodoInput({ key: "/", ctrlKey: true, target: { tagName: "button" } }), false);
+});
+
+test("empty state mentions the shortcut helper text", () => {
+  const html = readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
+  assert.match(html, /Press <kbd>\/<\/kbd> to focus the task field\./);
 });
 
 console.log("All tests passed.");
