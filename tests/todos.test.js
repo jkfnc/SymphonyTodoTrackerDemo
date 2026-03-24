@@ -16,6 +16,7 @@ test("createTodo trims the title", () => {
   const todo = createTodo("  Write tests  ");
   assert.equal(todo.title, "Write tests");
   assert.equal(todo.completed, false);
+  assert.match(todo.dueOn, /^\d{4}-\d{2}-\d{2}$/);
 });
 
 test("addTodo prepends a new todo", () => {
@@ -44,9 +45,27 @@ test("filterTodos supports active and completed", () => {
   assert.equal(filterTodos([first, second], "completed").length, 1);
 });
 
-test("getCounts returns summary totals", () => {
-  const todos = [createTodo("A"), { ...createTodo("B"), completed: true }];
-  assert.deepEqual(getCounts(todos), { all: 2, active: 1, completed: 1 });
+test("getCounts returns summary totals including dueToday", () => {
+  const todos = [
+    { id: "a", title: "A", completed: false, createdAt: "2026-03-23T08:00:00.000Z", dueOn: "2026-03-23" },
+    { id: "b", title: "B", completed: true, createdAt: "2026-03-23T09:00:00.000Z", dueOn: "2026-03-23" },
+    { id: "c", title: "C", completed: false, createdAt: "2026-03-24T09:00:00.000Z", dueOn: "2026-03-24" }
+  ];
+
+  assert.deepEqual(getCounts(todos, new Date("2026-03-23T12:00:00.000Z")), {
+    all: 3,
+    active: 2,
+    completed: 1,
+    dueToday: 1
+  });
+});
+
+test("getCounts falls back to createdAt for legacy todos without dueOn", () => {
+  const todos = [
+    { id: "legacy", title: "Legacy", completed: false, createdAt: "2026-03-23T08:00:00.000Z" }
+  ];
+
+  assert.equal(getCounts(todos, new Date("2026-03-23T12:00:00.000Z")).dueToday, 1);
 });
 
 console.log("All tests passed.");
