@@ -1,4 +1,23 @@
 :root {
+  color-scheme: dark;
+  --bg: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+  --panel: rgba(22, 27, 34, 0.92);
+  --line: rgba(240, 246, 252, 0.1);
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #238636;
+  --danger: #da3633;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  --radius: 24px;
+  --input-bg: rgba(13, 17, 23, 0.8);
+  --item-bg: rgba(30, 35, 43, 0.76);
+  --item-border: rgba(240, 246, 252, 0.08);
+  --filter-bg: rgba(30, 35, 43, 0.9);
+  --filter-active-bg: #1a4731;
+  --filter-active-text: #aff5c2;
+}
+
+:root.light-mode {
   color-scheme: light;
   --bg: linear-gradient(135deg, #f7f3ea 0%, #efe7d5 100%);
   --panel: rgba(255, 252, 245, 0.88);
@@ -8,7 +27,12 @@
   --accent: #0b6e4f;
   --danger: #b42318;
   --shadow: 0 24px 60px rgba(72, 49, 24, 0.12);
-  --radius: 24px;
+  --input-bg: rgba(255, 255, 255, 0.8);
+  --item-bg: rgba(255, 255, 255, 0.76);
+  --item-border: rgba(80, 60, 30, 0.1);
+  --filter-bg: white;
+  --filter-active-bg: #1f4d3d;
+  --filter-active-text: #effcf4;
 }
 
 * {
@@ -31,6 +55,16 @@ body {
 
 .hero {
   margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .eyebrow {
@@ -51,6 +85,26 @@ h1 {
   color: var(--muted);
   font-size: 1.05rem;
   line-height: 1.6;
+}
+
+.theme-toggle {
+  flex-shrink: 0;
+  margin-top: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--filter-bg);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--muted);
 }
 
 .panel {
@@ -79,7 +133,12 @@ h1 {
   padding: 14px 16px;
   border-radius: 16px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--input-bg);
+  color: var(--text);
+}
+
+.composer input::placeholder {
+  color: var(--muted);
 }
 
 .composer button {
@@ -112,7 +171,7 @@ h1 {
 
 .filter {
   border: 1px solid var(--line);
-  background: white;
+  background: var(--filter-bg);
   color: var(--muted);
   padding: 8px 12px;
   border-radius: 999px;
@@ -120,8 +179,8 @@ h1 {
 }
 
 .filter.is-active {
-  background: #1f4d3d;
-  color: #effcf4;
+  background: var(--filter-active-bg);
+  color: var(--filter-active-text);
 }
 
 .todo-list {
@@ -139,8 +198,8 @@ h1 {
   align-items: center;
   padding: 16px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.76);
-  border: 1px solid rgba(80, 60, 30, 0.1);
+  background: var(--item-bg);
+  border: 1px solid var(--item-border);
 }
 
 .todo-item.completed .todo-title {
@@ -151,6 +210,7 @@ h1 {
 .todo-check {
   width: 20px;
   height: 20px;
+  accent-color: var(--accent);
 }
 
 .todo-meta {
