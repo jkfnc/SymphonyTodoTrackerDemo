@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
 import { addTodo, createTodo, deleteTodo, filterTodos, getCounts, toggleTodo } from "../src/todos.js";
+
+const indexHtml = readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
+const stylesCss = readFileSync(new URL("../public/styles.css", import.meta.url), "utf8");
 
 function test(name, fn) {
   try {
@@ -47,6 +51,18 @@ test("filterTodos supports active and completed", () => {
 test("getCounts returns summary totals", () => {
   const todos = [createTodo("A"), { ...createTodo("B"), completed: true }];
   assert.deepEqual(getCounts(todos), { all: 2, active: 1, completed: 1 });
+});
+
+test("composer renders a keyboard shortcut hint for adding todos", () => {
+  assert.match(indexHtml, /aria-describedby="todo-shortcut-hint"/);
+  assert.match(indexHtml, /<p id="todo-shortcut-hint" class="composer-hint">Press <kbd>Enter<\/kbd> to add<\/p>/);
+});
+
+test("keyboard shortcut hint uses dedicated subtle styling", () => {
+  assert.match(stylesCss, /\.composer-hint\s*\{/);
+  assert.match(stylesCss, /justify-self:\s*end;/);
+  assert.match(stylesCss, /font-size:\s*0\.78rem;/);
+  assert.match(stylesCss, /\.composer-hint kbd\s*\{/);
 });
 
 console.log("All tests passed.");

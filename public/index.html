@@ -17,8 +17,9 @@
       <section class="panel">
         <form id="todo-form" class="composer">
           <label class="sr-only" for="todo-input">New task</label>
-          <input id="todo-input" name="title" type="text" placeholder="Add a task to the tracker" autocomplete="off" required>
+          <input id="todo-input" name="title" type="text" placeholder="Add a task to the tracker" autocomplete="off" aria-describedby="todo-shortcut-hint" required>
           <button type="submit">Add Task</button>
+          <p id="todo-shortcut-hint" class="composer-hint">Press <kbd>Enter</kbd> to add</p>
         </form>
 
         <div class="toolbar">
