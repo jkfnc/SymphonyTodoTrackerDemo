@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 
-import { addTodo, createTodo, deleteTodo, filterTodos, getCounts, toggleTodo } from "../src/todos.js";
+import { addTodo, clearCompleted, createTodo, deleteTodo, filterTodos, getCounts, toggleTodo } from "../src/todos.js";
 
 function test(name, fn) {
   try {
@@ -47,6 +47,20 @@ test("filterTodos supports active and completed", () => {
 test("getCounts returns summary totals", () => {
   const todos = [createTodo("A"), { ...createTodo("B"), completed: true }];
   assert.deepEqual(getCounts(todos), { all: 2, active: 1, completed: 1 });
+});
+
+test("clearCompleted removes all completed todos", () => {
+  const active = createTodo("Active");
+  const done = { ...createTodo("Done"), completed: true };
+  const result = clearCompleted([active, done]);
+  assert.equal(result.length, 1);
+  assert.equal(result[0].title, "Active");
+});
+
+test("clearCompleted returns same list when no todos are completed", () => {
+  const todos = [createTodo("A"), createTodo("B")];
+  const result = clearCompleted(todos);
+  assert.equal(result.length, 2);
 });
 
 console.log("All tests passed.");
